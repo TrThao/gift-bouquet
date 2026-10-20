@@ -1,24 +1,24 @@
 # gift-bouquet
 
+Mở bằng host tĩnh bất kỳ (GitHub Pages, Netlify…) — chỉ cần `index.html` + `config.js` + `assets/`.
+
+Local:
+
 ```bash
 python3 -m http.server 8765
 ```
 
 http://127.0.0.1:8765/index.html
 
-## Đổi ảnh (kéo file là xong)
+## Đổi ảnh
 
-| Folder | Dùng cho | Cách đặt tên |
-|--------|----------|--------------|
-| `assets/photos/` | 6 ảnh trên bó hoa | `1.png` … `6.png` |
-| `assets/photos-3d/` | ảnh bay màn 3D | tên gì cũng được |
-| `assets/letter/` | 1 ảnh trên lá thư | `photo.png` (hoặc `.jpg`) |
+| Folder | Dùng cho | Khai báo trong `config.js` |
+|--------|----------|----------------------------|
+| `assets/photos/` | 6 ảnh trên bó hoa | `photos` |
+| `assets/photos-3d/` | ảnh bay màn 3D | `scenePhotos` |
+| `assets/letter/` | 1 ảnh trên lá thư | `letter.photo` |
 
-Sau khi thêm/xóa ảnh trong `photos-3d`, chạy rồi mới push (để GitHub Pages nhận được):
-
-```bash
-python3 tools/sync-photos-3d.py
-```
+Đặt file vào folder rồi ghi path tương ứng vào `config.js`.
 
 ## Đổi chữ / thư / nhạc
 

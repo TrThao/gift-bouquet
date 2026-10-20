@@ -1,10 +1,9 @@
 /**
- * Chữ / thư / nhạc — sửa ở đây.
- * Ảnh: kéo file vào folder, không cần đụng index.html.
+ * Chữ / thư / nhạc / đường dẫn ảnh — sửa ở đây.
  *
- *   assets/photos/      → 6 ảnh trên bó hoa (1.png … 6.png)
- *   assets/photos-3d/   → ảnh bay màn 3D (kéo vào; trước khi push chạy: python3 tools/sync-photos-3d.py)
- *   assets/letter/      → 1 ảnh trên lá thư (photo.png / photo.jpg)
+ *   assets/photos/      → bó hoa (photos bên dưới)
+ *   assets/photos-3d/   → màn 3D (scenePhotos bên dưới)
+ *   assets/letter/      → ảnh thư (letter.photo)
  */
 export const CONFIG = {
   letter: {
@@ -27,7 +26,19 @@ export const CONFIG = {
 
   photoOrder: [0, 1, 2, 3, 4, 5],
 
-  scenePhotosDir: "assets/photos-3d",
+  scenePhotos: [
+    "assets/photos-3d/snaptik.vn_7682375525058301192_14.jpg",
+    "assets/photos-3d/snaptik.vn_7690511375680032007_1.jpg",
+    "assets/photos-3d/snaptik.vn_7690511375680032007_7.jpg",
+    "assets/photos-3d/snaptik.vn_7690511375680032007_8.jpg",
+    "assets/photos-3d/snaptik.vn_7690511375680032007_9.jpg",
+    "assets/photos-3d/snaptik.vn_7690511375680032007_10.jpg",
+    "assets/photos-3d/snaptik.vn_7690511375680032007_11.jpg",
+    "assets/photos-3d/snaptik.vn_7690511375680032007_12.jpg",
+    "assets/photos-3d/snaptik.vn_7690511375680032007_13.jpg",
+    "assets/photos-3d/snaptik.vn_7690511375680032007_14.jpg",
+    "assets/photos-3d/snaptik.vn_7690511375680032007_17.jpg"
+  ],
 
   music: "assets/music.mp3",
 
