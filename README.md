@@ -14,6 +14,12 @@ http://127.0.0.1:8765/index.html
 | `assets/photos-3d/` | ảnh bay màn 3D | tên gì cũng được |
 | `assets/letter/` | 1 ảnh trên lá thư | `photo.png` (hoặc `.jpg`) |
 
+Sau khi thêm/xóa ảnh trong `photos-3d`, chạy rồi mới push (để GitHub Pages nhận được):
+
+```bash
+python3 tools/sync-photos-3d.py
+```
+
 ## Đổi chữ / thư / nhạc
 
 Sửa **`config.js`**:

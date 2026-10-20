@@ -3,7 +3,7 @@
  * Ảnh: kéo file vào folder, không cần đụng index.html.
  *
  *   assets/photos/      → 6 ảnh trên bó hoa (1.png … 6.png)
- *   assets/photos-3d/   → ảnh bay màn 3D (kéo vào, tên gì cũng được)
+ *   assets/photos-3d/   → ảnh bay màn 3D (kéo vào; trước khi push chạy: python3 tools/sync-photos-3d.py)
  *   assets/letter/      → 1 ảnh trên lá thư (photo.png / photo.jpg)
  */
 export const CONFIG = {

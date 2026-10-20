@@ -752,19 +752,40 @@
 
     const IMG_EXT = /\.(png|jpe?g|webp)$/i;
 
-    /** đọc mọi ảnh trong folder (tên tự do) qua directory listing của http.server */
+    /** danh sách ảnh đã ghi sẵn — cần cho GitHub Pages / host tĩnh (không có directory listing) */
+    async function listFromManifest(dir) {
+      const base = dir.replace(/\/$/, "");
+      try {
+        const res = await fetch(`${base}/manifest.json`, { cache: "no-store" });
+        if (!res.ok) return [];
+        const data = await res.json();
+        const names = Array.isArray(data) ? data
+          : Array.isArray(data?.files) ? data.files
+          : [];
+        return names
+          .map((n) => String(n || "").trim())
+          .filter((n) => n && IMG_EXT.test(n) && !/huong-dan|manifest/i.test(n))
+          .map((n) => `${base}/${n.replace(/^\.\//, "")}`);
+      } catch {
+        return [];
+      }
+    }
+
+    /** đọc mọi ảnh trong folder (tên tự do) qua directory listing của http.server — chỉ chạy local */
     async function listFolderImages(dir) {
       const base = dir.replace(/\/$/, "");
       try {
         const res = await fetch(`${base}/`);
         if (!res.ok) return [];
         const html = await res.text();
+        /* GitHub Pages trả index.html của app, không phải listing */
+        if (!/<a\s[^>]*href=/i.test(html) || /<script\s/i.test(html.slice(0, 800))) return [];
         const names = new Set();
         for (const m of html.matchAll(/href="([^"]+)"/gi)) {
           let href = m[1].split("?")[0];
           try { href = decodeURIComponent(href); } catch { /* keep */ }
           const name = href.split("/").pop();
-          if (!name || name.startsWith(".") || /huong-dan/i.test(name)) continue;
+          if (!name || name.startsWith(".") || /huong-dan|manifest/i.test(name)) continue;
           if (IMG_EXT.test(name)) names.add(name);
         }
         return [...names].sort((a, b) => a.localeCompare(b, undefined, { numeric: true }))
@@ -776,12 +797,13 @@
 
     async function loadScenePhotos() {
       const dir = (CONFIG.scenePhotosDir || "assets/photos-3d").replace(/\/$/, "");
-      const listed = await listFolderImages(dir);
+      /* 1) manifest.json (host tĩnh) → 2) directory listing (local) → 3) 1.png…N */
+      let listed = await listFromManifest(dir);
+      if (!listed.length) listed = await listFolderImages(dir);
       if (listed.length) {
         const ok = await Promise.all(listed.map(probe));
         return ok.filter(Boolean);
       }
-      /* fallback: 1.png … N nếu server không list được thư mục */
       const max = CONFIG.scenePhotoMax || 24;
       const exts = ["png", "webp", "jpg", "jpeg"];
       const slots = await Promise.all(Array.from({ length: max }, async (_, i) => {

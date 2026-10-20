@@ -1,7 +1,11 @@
 ẢNH MÀN SAU (bay trong không gian 3D)
 
-Kéo ảnh vào đây — tên file gì cũng được (.png / .jpg / .webp).
-Reload trang là dùng ảnh mới.
+1. Kéo ảnh vào đây — tên file gì cũng được (.png / .jpg / .webp).
+2. Chạy lệnh này rồi mới đẩy git (để host nhận được ảnh):
+
+   python3 tools/sync-photos-3d.py
+
+Local (python3 -m http.server) có thể bỏ bước 2 — reload trang là được.
 
 Bó hoa: assets/photos/
 Ảnh thư: assets/letter/photo.png
