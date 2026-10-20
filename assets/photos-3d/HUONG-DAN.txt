@@ -1,0 +1,7 @@
+ẢNH MÀN SAU (bay trong không gian 3D)
+
+Kéo ảnh vào đây — tên file gì cũng được (.png / .jpg / .webp).
+Reload trang là dùng ảnh mới.
+
+Bó hoa: assets/photos/
+Ảnh thư: assets/letter/photo.png
