@@ -31,18 +31,20 @@ export const CONFIG = {
 
   music: "assets/music.mp3",
 
+  // Câu ngắn (≤ 20 ký tự) sẽ xếp dày hơn, câu dài xếp thưa hơn — nên trộn cả hai.
   wishes: [
     "Chúc em ngày 20/10 vui vẻ",
-    "Chúc em luôn xinh đẹp",
-    "Chúc em luôn khỏe mạnh",
+    "Chúc em xinh đẹp",
+    "Luôn khỏe mạnh",
     "Chúc mừng ngày Phụ nữ Việt Nam",
     "20/10",
-    "Chúc em thật nhiều may mắn",
+    "Nhiều may mắn",
     "Mong em luôn vui vẻ",
     "Chúc em yêu đời",
     "Chúc em bình an",
     "Mong mọi điều tốt lành đến với em",
-    "Chúc em một ngày thật dễ chịu"
+    "Chúc mừng 20/10",
+    "Vui vẻ nhé"
   ],
 
   hintTap: "Chạm nhẹ để hé ảnh",
