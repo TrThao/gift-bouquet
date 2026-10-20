@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Fraunces:opsz,wght@9..144,500;9..144,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Mali:wght@500;600&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="assets/bouquet-intro/wrap-back-v2.webp">
   <link rel="preload" as="image" href="assets/bouquet-intro/wrap-front-v2.webp">
   <link rel="preload" as="image" href="assets/bouquet-intro/rose-pink.webp">
@@ -223,8 +223,10 @@
       box-shadow: 0 4px 12px rgba(0,0,0,.4);
     }
     .bouquet-screen .ribbon-hint-arrow {
-      margin-top: 6px; font-size: 11px; letter-spacing: .04em;
-      color: var(--gold); opacity: calc(.9 - var(--pull-progress));
+      margin-top: 8px; font-size: 18px; font-weight: 600; letter-spacing: .02em;
+      color: #ffe7b0;
+      text-shadow: 0 2px 8px rgba(0,0,0,.75), 0 0 12px rgba(212,176,106,.55);
+      opacity: calc(1 - var(--pull-progress) * .85);
       font-family: var(--font-hand); white-space: nowrap;
       animation: nudge-down 1.4s ease-in-out infinite;
     }
@@ -256,9 +258,10 @@
     .bouquet-screen .bouquet-reveal[hidden] { display: none; }
     .bouquet-screen .bouquet-footer { position: relative; z-index: 2; flex: 0 0 auto; margin-top: 12px; }
     .bouquet-screen .bouquet-hint {
-      min-height: 1.6em; margin: 0; font-size: 13px; line-height: 1.6;
-      letter-spacing: .01em; color: var(--gold-dim);
-      font-family: var(--font-hand);
+      min-height: 1.7em; margin: 0; font-size: 18px; line-height: 1.5;
+      letter-spacing: .01em; color: #ffe7b0;
+      text-shadow: 0 2px 10px rgba(0,0,0,.65);
+      font-family: var(--font-hand); font-weight: 600;
     }
     .bouquet-screen .bouquet-status {
       position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
@@ -414,15 +417,6 @@
     #paper .snap img { width: 100%; aspect-ratio: 3 / 3.6; object-fit: cover; display: block; }
     #paper .snap[aria-pressed="true"] { transform: translate(-40%, 0) rotate(0) scale(2); cursor: zoom-out; z-index: 2; }
 
-    #pick {
-      position: fixed; left: 14px; top: max(14px, env(safe-area-inset-top)); z-index: 1100;
-      border: 1px solid rgba(255,255,255,.22); background: rgba(20, 8, 16, .72); color: #fff; border-radius: 999px;
-      padding: 8px 14px; font: 500 .82rem/1 var(--font-ui); cursor: pointer;
-      transition: opacity .4s;
-    }
-    #pick input { display: none; }
-    body.is-open #pick { opacity: 0; pointer-events: none; }
-
     #letter {
       z-index: 1; background: #000;
       transition: opacity .8s ease, visibility .8s ease;
@@ -472,7 +466,7 @@
         <div class="ribbon-pull" aria-hidden="true">
           <div class="ribbon-cord"></div>
           <div class="ribbon-knob"></div>
-          <span class="ribbon-hint-arrow">kéo ↓</span>
+          <span class="ribbon-hint-arrow">Kéo xuống ↓</span>
         </div>
         <button class="bouquet-reveal" type="button" aria-label="Chạm nhẹ để hé ảnh" aria-describedby="bouquet-hint"></button>
       </div>
@@ -481,7 +475,6 @@
       </footer>
       <p class="bouquet-status" role="status" aria-live="polite">Chạm nhẹ để hé ảnh</p>
     </section>
-    <label id="pick">Đưa ảnh của bạn<input id="files" type="file" accept="image/*" multiple></label>
   </div>
 
   <section class="stage is-hidden" id="letter" aria-label="Thiệp đã mở"></section>
@@ -964,20 +957,6 @@
       if (bloomed && !opened) openLetter();
     });
 
-    $("#files").addEventListener("change", (e) => {
-      const files = [...e.target.files].filter((f) => f.type.startsWith("image/"));
-      if (!files.length) return;
-      photos = files.map((f) => URL.createObjectURL(f));
-      const order = CONFIG.photoOrder || SLOTS.map((_, i) => i);
-      stage.querySelectorAll(".bouquet-photo").forEach((wrap, i) => {
-        const idx = order[i] % photos.length;
-        wrap.dataset.photoIndex = String(idx);
-        const im = wrap.querySelector("img");
-        if (im) im.src = photos[idx];
-      });
-      refreshLetterPhoto();
-    });
-
     function openLetter() {
       if (opened) return;
       opened = true;
@@ -1003,8 +982,8 @@
     let renderer, scene, camera, world;
     const field = [];
     const DEPTH = 160, SPREAD_X = 24, SPREAD_Y = 16;
-    const TEX_MAX = 512;
-    const N_CARDS = 14, N_WISHES = 22, N_HEARTS = 8, N_STARS = 520;
+    const TEX_MAX = 768;
+    const N_CARDS = 20, N_WISHES = 36, N_HEARTS = 14, N_STARS = 1100;
 
     function loadDownscaledTexture(url, maxSize = TEX_MAX) {
       return new Promise((resolve) => {
@@ -1036,7 +1015,7 @@
       let meshData = textCache.get(key);
       if (!meshData) {
         const c = document.createElement("canvas"), x = c.getContext("2d");
-        const font = `${weight} ${px}px Caveat, cursive`;
+        const font = `${weight} ${px}px Mali, sans-serif`;
         x.font = font;
         const w = Math.ceil(x.measureText(text).width) + px * 1.6;
         c.width = w; c.height = Math.ceil(px * 2.2);
@@ -1061,8 +1040,8 @@
       s.bezierCurveTo(-30, 55, -10, 77, 25, 95); s.bezierCurveTo(60, 77, 80, 55, 80, 35);
       s.bezierCurveTo(80, 35, 80, 0, 50, 0); s.bezierCurveTo(35, 0, 25, 25, 25, 25);
       const g = new THREE.ExtrudeGeometry(s, {
-        depth: 10, bevelEnabled: true, bevelThickness: 5, bevelSize: 5,
-        bevelSegments: 2, curveSegments: 6
+        depth: 14, bevelEnabled: true, bevelThickness: 8, bevelSize: 8,
+        bevelSegments: 4, curveSegments: 10
       });
       g.center(); g.rotateZ(Math.PI); g.scale(.022, .022, .022);
       return g;
@@ -1128,10 +1107,10 @@
         : (photos.length ? photos : CONFIG.photos);
 
       const isMobile = matchMedia("(max-width: 700px), (pointer: coarse)").matches;
-      const dprCap = isMobile ? 1.25 : 1.5;
+      const dprCap = isMobile ? 1.5 : 2;
 
       renderer = new THREE.WebGLRenderer({
-        antialias: !isMobile,
+        antialias: true,
         alpha: false,
         powerPreference: "high-performance",
         stencil: false,
@@ -1148,8 +1127,9 @@
       camera.position.set(0, 0, 10);
       world = new THREE.Group();
       scene.add(world);
-      /* BasicMaterial hết — không cần đèn Phong */
-      scene.add(new THREE.AmbientLight(0xffe8f0, 1));
+      scene.add(new THREE.AmbientLight(0xffe8f0, 1.45));
+      const key = new THREE.DirectionalLight(0xffd0e0, 2.2); key.position.set(4, 8, 10); scene.add(key);
+      const rim = new THREE.DirectionalLight(0xee66a6, 1.25); rim.position.set(-6, -4, 2); scene.add(rim);
 
       const texList = (await Promise.all(gallery.map((u) => loadDownscaledTexture(u)))).filter(Boolean);
       const textures = texList.length ? texList : [await loadDownscaledTexture(gallery[0])].filter(Boolean);
@@ -1170,8 +1150,7 @@
         return g;
       };
 
-      const cardCount = isMobile ? 10 : N_CARDS;
-      for (let i = 0; i < cardCount; i++) {
+      for (let i = 0; i < N_CARDS; i++) {
         const sz = sizes[i % 3];
         const card = new THREE.Group();
         const frame = new THREE.Mesh(planeGeo(sz * 1.14, sz * 1.48), frameMat);
@@ -1189,12 +1168,12 @@
         field.push(card);
       }
 
-      const colors = ["#d4b06a", "#c45a6e", "#f0d9a0", "#9c2a45"];
-      const wishCount = isMobile ? 14 : N_WISHES;
-      for (let i = 0; i < wishCount; i++) {
+      /* chữ bay — tông hồng như bản gốc */
+      const colors = ["#EE66A6", "#ff8ab8", "#ffc0d4", "#ff6aa0"];
+      for (let i = 0; i < N_WISHES; i++) {
         const text = CONFIG.wishes[i % CONFIG.wishes.length];
-        const px = [28, 36, 52][i % 3];
-        const t = textPlane(text, px, colors[i % 4], "rgba(212,176,106,.85)");
+        const px = [28, 36, 52, 68][i % 4];
+        const t = textPlane(text, px, colors[i % 4], "rgba(238,102,166,.95)");
         t.rotation.set((Math.random() - .5) * .35, (Math.random() - .5) * .9, (Math.random() - .5) * .18);
         scatter(t);
         t.userData.spin = 0;
@@ -1203,9 +1182,10 @@
       }
 
       const hGeo = heartGeometry();
-      const hMat = new THREE.MeshBasicMaterial({ color: 0xc45a6e });
-      const heartCount = isMobile ? 5 : N_HEARTS;
-      for (let i = 0; i < heartCount; i++) {
+      const hMat = new THREE.MeshPhongMaterial({
+        color: 0xee66a6, emissive: 0x4a1028, shininess: 80, specular: 0xffd0e0
+      });
+      for (let i = 0; i < N_HEARTS; i++) {
         const h = new THREE.Mesh(hGeo, hMat);
         h.scale.setScalar(.4 + Math.random() * .9);
         h.rotation.set((Math.random() - .5) * .8, Math.random() * 6.28, (Math.random() - .5) * .6);
@@ -1216,10 +1196,10 @@
       }
 
       const starMat = new THREE.PointsMaterial({
-        color: 0xffe0ec, size: .36, transparent: true, opacity: .85,
+        color: 0xffe0ec, size: .36, transparent: true, opacity: .9,
         sizeAttenuation: true, depthWrite: false
       });
-      const starN = isMobile ? 320 : N_STARS;
+      const starN = N_STARS;
       const starLayers = [];
       for (let L = 0; L < 2; L++) {
         const g = new THREE.BufferGeometry(), pos = new Float32Array(starN * 3);

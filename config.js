@@ -11,8 +11,8 @@ export const CONFIG = {
     envTo: "Dành tặng em",
     envDate: "20/10",
     envSub: "Chúc mừng ngày 20/10",
-    title: "Chúc em ngày 20/10 thật vui ♡",
-    body: "Anh chúc em ngày Phụ nữ Việt Nam lúc nào cũng xinh đẹp, vui vẻ, thật nhiều sức khỏe và may mắn.\n\nCảm ơn em vì đã cho anh được làm quen và có những kỷ niệm dễ thương như thế này. Mong mọi điều dịu dàng sẽ đến với em.\n\nChúc em luôn là phiên bản rạng rỡ nhất của chính mình nhé.",
+    title: "Chúc em ngày 20/10 vui vẻ ♡",
+    body: "Anh chúc em ngày Phụ nữ Việt Nam thật vui, luôn xinh đẹp, khỏe mạnh và nhiều may mắn.\n\nMới được làm quen em được vài ngày thôi, nên anh chỉ muốn gửi một lời chúc nhỏ cho ngày đặc biệt này.\n\nMong em có một ngày 20/10 thật nhẹ nhàng và dễ chịu nhé.",
     photo: "assets/letter/photo.png"
   },
 
@@ -32,21 +32,21 @@ export const CONFIG = {
   music: "assets/music.mp3",
 
   wishes: [
-    "Chúc em luôn vui vẻ",
+    "Chúc em ngày 20/10 vui vẻ",
     "Chúc em luôn xinh đẹp",
-    "Chúc em luôn yêu đời",
-    "Chúc mừng ngày phụ nữ Việt Nam",
+    "Chúc em luôn khỏe mạnh",
+    "Chúc mừng ngày Phụ nữ Việt Nam",
     "20/10",
     "Chúc em thật nhiều may mắn",
-    "Mong em luôn hạnh phúc",
-    "Em thật dễ thương",
-    "Cảm ơn em đã xuất hiện",
-    "Chúc em bình an và rạng rỡ",
-    "Mong mọi điều dịu dàng đến với em"
+    "Mong em luôn vui vẻ",
+    "Chúc em yêu đời",
+    "Chúc em bình an",
+    "Mong mọi điều tốt lành đến với em",
+    "Chúc em một ngày thật dễ chịu"
   ],
 
   hintTap: "Chạm nhẹ để hé ảnh",
-  hintPull: "Kéo ruy băng xuống để mở quà",
-  pullPx: 130,
+  hintPull: "Kéo ruy băng xuống ↓ để mở quà",
+  pullPx: 110,
   flyHint: "Vuốt để nhìn quanh · Chạm phong thư góc phải để đọc thư"
 };
